@@ -20,8 +20,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "bio-samtools-server"
   gem.homepage = "http://github.com/homonecloco/bioruby-samtools-server"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Web server for bio-samtools}
+  gem.description = %Q{A minimal web service on the top of sinatra to query bam files}
   gem.email = "ricardo.ramirez-gonzalez@tgac.ac.uk"
   gem.authors = ["homonecloco"]
   gem.version = version
