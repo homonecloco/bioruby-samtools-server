@@ -2,6 +2,9 @@
 
 require 'rubygems'
 require 'bundler'
+
+version = File.exist?('VERSION') ? File.read('VERSION') : ""
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -21,6 +24,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{TODO: longer description of your gem}
   gem.email = "ricardo.ramirez-gonzalez@tgac.ac.uk"
   gem.authors = ["homonecloco"]
+  gem.version = version
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
