@@ -7,6 +7,6 @@
 #   require 'bio/bio-plugin/plugin'
 #
 # In this file only require other files. Avoid other source code.
-
+require 'bio-samtools'
 require 'bio-samtools-server/samtools-server.rb'
 
