@@ -30,7 +30,8 @@ module Bio::WS
       File.read(File.join(biojs_path, file))
     end
       
-    get '/' do
+    get '/region' do
+
       folder = settings.folder.to_s
       
       bam = params[:bam]
@@ -48,5 +49,18 @@ module Bio::WS
         end
       end
     end
+  
+    get '/list' do
+       bam = params[:bam]
+       ref = params[:ref]
+       stream do |out|
+         get_bam(bam, ref).each_region do |reg|
+           puts reg
+          out <<  "#{reg.to_s}\n"
+         end
+       end
+       
+    end
+    
   end
 end
