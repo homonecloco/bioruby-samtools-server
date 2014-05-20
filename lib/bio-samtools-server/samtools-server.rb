@@ -24,6 +24,12 @@ module Bio::WS
       return @bam_files[bam] 
     end
       
+    get '/biojs/*' do
+      file=params[:splat]
+      biojs_path = "#{self.settings.biojs.to_s}"
+      File.read(File.join(biojs_path, file))
+    end
+      
     get '/' do
       folder = settings.folder.to_s
       

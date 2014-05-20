@@ -21,6 +21,10 @@ OptionParser.new do |opts|
    opts.on("-f", "--bam FOLDER", "Folder containing the BAM files") do |o|
      options[:folder] = o
    end   
+
+   opts.on("-b", "--biojs FOLDER", "Folder containing the compiled biojs module (optinal)") do |o|
+   	options[:biojs] = o
+   end
    
 end.parse!  
    
