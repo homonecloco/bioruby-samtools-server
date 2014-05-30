@@ -30,24 +30,42 @@ module Bio::WS
       File.read(File.join(biojs_path, file))
     end
       
-    get '/region' do
-
-      folder = settings.folder.to_s
-      
+    get '/alignment' do
       bam = params[:bam]
       region = params[:region]
       ref = params[:ref]
-      
-#      "Hello World from MyApp in separate file! #{ self.settings.folder.to_s} #{bam} #{region}"
-      #self.settings.folder.to_s
+      reg = Bio::DB::Fasta::Region.parse_region(region)
       stream do |out|
-        get_bam(bam, ref).fetch("chr_1", 10,1000) do |sam|
-          # test that all the objects are Bio::DB::Alignment objects
-          #assert_equal(sam.class, Bio::DB::Alignment)
-          #assert_equal(sam.rname, "chr_1")
+        get_bam(bam, ref).fetch(reg.entry, reg.start, reg.end) do |sam|
           out << "#{sam.sam_string}\n"
         end
       end
+    end
+
+    get '/wig' do
+      bam = params[:bam]
+      region = params[:region]
+      ref = params[:ref]
+      step_size = 1
+      step_size = params[:step_size].to_i if params[:step_size]
+      step_size = 1 if step_size < 1
+      reg = Bio::DB::Fasta::Region.parse_region(region)
+      stream do |out|
+         pile_region = get_bam(bam, ref).fetch_region({:region=>reg}) 
+         out << pile_region.to_wig({:step_size=>step_size})
+      end
+    end
+
+    get '/reference' do
+      bam = params[:bam]
+      region = params[:region]
+      ref = params[:ref]
+      reg = Bio::DB::Fasta::Region.parse_region(region)
+      stream do |out|
+         ref = get_bam(bam, ref).fetch_reference(reg.entry, reg.start, reg.end)
+          out << "#{ref}\n"
+       end
+      
     end
   
     get '/list' do
@@ -55,7 +73,6 @@ module Bio::WS
        ref = params[:ref]
        stream do |out|
          get_bam(bam, ref).each_region do |reg|
-           puts reg
           out <<  "#{reg.to_s}\n"
          end
        end
