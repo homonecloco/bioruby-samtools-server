@@ -27,26 +27,26 @@ To run the server:
 bam-server.rb  -r FOLDER_WITH_REFERENCES --bam FOLDER_WITH_BAM_FILES
 ```
 
-On the web browser, the following outputs are implemented (so far)
+On the web browser, the following outputs are implemented (so far). The first element in the path is the file with the reference, the second the BAM file (without extension) and the parameter "region" is used to query 
 
 
 WIG TEST:
 ```
-http://localhost:4567/wig?bam=testu&region=chr_1:203-276&ref=test_chr.fasta&step_size=5
+http://localhost:4567/test_chr.fasta/testu/wig?region=chr_1:1-100&step_size=5
 ```
 the param step_size sets the number of positions to be averaged. See the wiggle [documentation](http://genome.ucsc.edu/goldenPath/help/wiggle.html) 
 
 ALIGNMENT TEST
 ```
-http://localhost:4567/alignment?bam=testu&region=chr_1:203-276&ref=test_chr.fasta
+http://localhost:4567/test_chr.fasta/testu/alignment?region=chr_1:1-100
 ```
 LIST
 ```
-http://localhost:4567/list?bam=testu&ref=test_chr.fasta
+http://localhost:4567/test_chr.fasta/testu/list
 ```
 Reference
 ```
-http://localhost:4567/reference?bam=testu&region=chr_1:203-276&ref=test_chr.fasta
+http://localhost:4567/test_chr.fasta/testu/reference?region=chr_1:1-100
 ```
 
 ## Project home page

@@ -30,10 +30,8 @@ module Bio::WS
       File.read(File.join(biojs_path, file))
     end
       
-    get '/alignment' do
-      bam = params[:bam]
+    get '/*/*/alignment' do |ref, bam|
       region = params[:region]
-      ref = params[:ref]
       reg = Bio::DB::Fasta::Region.parse_region(region)
       stream do |out|
         get_bam(bam, ref).fetch(reg.entry, reg.start, reg.end) do |sam|
@@ -42,12 +40,10 @@ module Bio::WS
       end
     end
 
-    get '/wig' do
-      bam = params[:bam]
-      region = params[:region]
-      ref = params[:ref]
+    get '/*/*/wig' do |ref, bam|
       step_size = 1
       step_size = params[:step_size].to_i if params[:step_size]
+      region = params[:region]
       step_size = 1 if step_size < 1
       reg = Bio::DB::Fasta::Region.parse_region(region)
       stream do |out|
@@ -56,10 +52,8 @@ module Bio::WS
       end
     end
 
-    get '/reference' do
-      bam = params[:bam]
+    get '/*/*/reference' do |ref, bam|
       region = params[:region]
-      ref = params[:ref]
       reg = Bio::DB::Fasta::Region.parse_region(region)
       stream do |out|
          ref = get_bam(bam, ref).fetch_reference(reg.entry, reg.start, reg.end)
@@ -68,9 +62,7 @@ module Bio::WS
       
     end
   
-    get '/list' do
-       bam = params[:bam]
-       ref = params[:ref]
+    get '/*/*/list' do |ref, bam|
        stream do |out|
          get_bam(bam, ref).each_region do |reg|
           out <<  "#{reg.to_s}\n"
