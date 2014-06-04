@@ -76,7 +76,6 @@ module Bio::WS
           out <<  "#{reg.to_s}\n"
          end
        end
-       
     end
     
   end
