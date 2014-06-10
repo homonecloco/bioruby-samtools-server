@@ -4,6 +4,10 @@ require 'sinatra/base'
 module Bio::WS
   class BAM < Sinatra::Base
     
+    configure do
+      mime_type :js, 'text/javascript'
+    end
+
     def initialize(app = nil, params = {})
       super(app)
       @bootstrap = params.fetch(:bootstrap, false)
@@ -27,6 +31,10 @@ module Bio::WS
     get '/biojs/*' do
       file=params[:splat]
       biojs_path = "#{self.settings.biojs.to_s}"
+      puts "loading!: #{biojs_path}"
+      if file and file.last.end_with?(".js")
+        content_type :js 
+      end
       File.read(File.join(biojs_path, file))
     end
       
