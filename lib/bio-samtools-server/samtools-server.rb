@@ -14,6 +14,7 @@ module Bio::WS
       return @bam_files[bam] if @bam_files[bam] 
       
       bam_path = "#{self.settings.folder.to_s}/#{bam}.bam"
+      #puts "The path is: #{bam_path}"
       reference_path =  "#{self.settings.reference.to_s}/#{reference}"
       return nil unless File.file?(bam_path)
       @bam_files[bam] = Bio::DB::Sam.new( 
@@ -32,7 +33,9 @@ module Bio::WS
       
     get '/*/*/alignment' do |ref, bam|
       region = params[:region]
+      #puts region
       reg = Bio::DB::Fasta::Region.parse_region(region)
+      #puts "Parsed region: #{reg.entry}"
       stream do |out|
         get_bam(bam, ref).fetch(reg.entry, reg.start, reg.end) do |sam|
           out << "#{sam.sam_string}\n"
