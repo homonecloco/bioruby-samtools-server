@@ -26,9 +26,15 @@ module Bio::WS
     end
       
     get '/biojs/*' do
+       
       file=params[:splat]
       biojs_path = "#{self.settings.biojs.to_s}"
-      File.read(File.join(biojs_path, file))
+      file = File.join(biojs_path, file)
+     
+      content_type "text/css"  if File.extname(file) == ".css"
+      content_type "application/javascript" if File.extname(file) == ".js"
+
+      File.read(file)
     end
       
     get '/*/*/alignment' do |ref, bam|
