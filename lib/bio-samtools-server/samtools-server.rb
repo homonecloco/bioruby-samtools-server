@@ -4,6 +4,10 @@ require 'sinatra/base'
 module Bio::WS
   class BAM < Sinatra::Base
     
+    configure do
+      mime_type :js, 'text/javascript'
+    end
+
     def initialize(app = nil, params = {})
       super(app)
       @bootstrap = params.fetch(:bootstrap, false)
